@@ -1,79 +1,79 @@
-//########## ƒwƒbƒ_[ƒtƒ@ƒCƒ‹“Ç‚Ýž‚Ý ##########
+//########## ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿ ##########
 #include "DxLib.h"
 
-#define GAME_WIDTH			 960	//‰æ–Ê‚Ì‰¡‚Ì‘å‚«‚³
-#define GAME_HEIGHT			 640	//‰æ–Ê‚Ìc‚Ì‘å‚«‚³
-#define GAME_COLOR			  32	//‰æ–Ê‚ÌƒJƒ‰[ƒrƒbƒg
+#define GAME_WIDTH			 960	//ç”»é¢ã®æ¨ªã®å¤§ãã•
+#define GAME_HEIGHT			 640	//ç”»é¢ã®ç¸¦ã®å¤§ãã•
+#define GAME_COLOR			  32	//ç”»é¢ã®ã‚«ãƒ©ãƒ¼ãƒ“ãƒƒãƒˆ
 
-#define GAME_WINDOW_BAR		0				//ƒ^ƒCƒgƒ‹ƒo[‚ÍƒfƒtƒHƒ‹ƒg‚É‚·‚é
-#define GAME_WINDOW_NAME	"Dxlib_Movie"	//ƒEƒBƒ“ƒhƒE‚Ìƒ^ƒCƒgƒ‹
+#define GAME_WINDOW_BAR		0				//ã‚¿ã‚¤ãƒˆãƒ«ãƒãƒ¼ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«ã™ã‚‹
+#define GAME_WINDOW_NAME	"Dxlib_Movie"	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚¿ã‚¤ãƒˆãƒ«
 
-//¥¥¥¥¥ ƒvƒƒOƒ‰ƒ€’Ç‰Á‚±‚±‚©‚ç ¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥
+//â–¼â–¼â–¼â–¼â–¼ ãƒ—ãƒ­ã‚°ãƒ©ãƒ è¿½åŠ ã“ã“ã‹ã‚‰ â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼
 
-//MOVIEƒtƒHƒ‹ƒ_‚ÆAmp4ƒtƒ@ƒCƒ‹‚àA’Ç‰Á‚µ‚Ä‰º‚³‚¢
-#define MOVIE_PATH			".\\MOVIE\\neko.mp4"	//“®‰æ‚ÌƒpƒX
+//MOVIEãƒ•ã‚©ãƒ«ãƒ€ã¨ã€mp4ãƒ•ã‚¡ã‚¤ãƒ«ã‚‚ã€è¿½åŠ ã—ã¦ä¸‹ã•ã„
+#define MOVIE_PATH			".\\MOVIE\\neko.mp4"	//å‹•ç”»ã®ãƒ‘ã‚¹
 
-int handle = -1;	//“®‰æ‚Ìƒnƒ“ƒhƒ‹
+int handle = -1;	//å‹•ç”»ã®ãƒãƒ³ãƒ‰ãƒ«
 
-//£££££ ƒvƒƒOƒ‰ƒ€’Ç‰Á‚±‚±‚Ü‚Å ££££££££££££££££££££
+//â–²â–²â–²â–²â–² ãƒ—ãƒ­ã‚°ãƒ©ãƒ è¿½åŠ ã“ã“ã¾ã§ â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²
 
-//########## ƒvƒƒOƒ‰ƒ€‚ÅÅ‰‚ÉŽÀs‚³‚ê‚éŠÖ” ##########
+//########## ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã§æœ€åˆã«å®Ÿè¡Œã•ã‚Œã‚‹é–¢æ•° ##########
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	SetOutApplicationLogValidFlag(FALSE);				//log.txt‚ðo—Í‚µ‚È‚¢
-	ChangeWindowMode(TRUE);								//ƒEƒBƒ“ƒhƒEƒ‚[ƒh‚ÉÝ’è
-	SetGraphMode(GAME_WIDTH, GAME_HEIGHT, GAME_COLOR);	//Žw’è‚Ì”’l‚ÅƒEƒBƒ“ƒhƒE‚ð•\Ž¦‚·‚é
-	SetWindowStyleMode(GAME_WINDOW_BAR);				//ƒ^ƒCƒgƒ‹ƒo[‚ÍƒfƒtƒHƒ‹ƒg‚É‚·‚é
-	SetMainWindowText(TEXT(GAME_WINDOW_NAME));			//ƒEƒBƒ“ƒhƒE‚Ìƒ^ƒCƒgƒ‹‚Ì•¶Žš
-	SetAlwaysRunFlag(TRUE);								//”ñƒAƒNƒeƒBƒu‚Å‚àŽÀs‚·‚é
+	SetOutApplicationLogValidFlag(FALSE);				//log.txtã‚’å‡ºåŠ›ã—ãªã„
+	ChangeWindowMode(TRUE);								//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ¢ãƒ¼ãƒ‰ã«è¨­å®š
+	SetGraphMode(GAME_WIDTH, GAME_HEIGHT, GAME_COLOR);	//æŒ‡å®šã®æ•°å€¤ã§ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’è¡¨ç¤ºã™ã‚‹
+	SetWindowStyleMode(GAME_WINDOW_BAR);				//ã‚¿ã‚¤ãƒˆãƒ«ãƒãƒ¼ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«ã™ã‚‹
+	SetMainWindowText(TEXT(GAME_WINDOW_NAME));			//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚¿ã‚¤ãƒˆãƒ«ã®æ–‡å­—
+	SetAlwaysRunFlag(TRUE);								//éžã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã§ã‚‚å®Ÿè¡Œã™ã‚‹
 
-	if (DxLib_Init() == -1) { return -1; }	//‚c‚wƒ‰ƒCƒuƒ‰ƒŠ‰Šú‰»ˆ—
+	if (DxLib_Init() == -1) { return -1; }	//ï¼¤ï¼¸ãƒ©ã‚¤ãƒ–ãƒ©ãƒªåˆæœŸåŒ–å‡¦ç†
 
-	//¥¥¥¥¥ ƒvƒƒOƒ‰ƒ€’Ç‰Á‚±‚±‚©‚ç ¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥
+	//â–¼â–¼â–¼â–¼â–¼ ãƒ—ãƒ­ã‚°ãƒ©ãƒ è¿½åŠ ã“ã“ã‹ã‚‰ â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼
 
-	//“®‰æ‚Ì“Ç‚Ýž‚Ý
+	//å‹•ç”»ã®èª­ã¿è¾¼ã¿
 	handle = LoadGraph(MOVIE_PATH);
 
-	//£££££ ƒvƒƒOƒ‰ƒ€’Ç‰Á‚±‚±‚Ü‚Å ££££££££££££££££££££
+	//â–²â–²â–²â–²â–² ãƒ—ãƒ­ã‚°ãƒ©ãƒ è¿½åŠ ã“ã“ã¾ã§ â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²
 
-	//–³ŒÀƒ‹[ƒv
+	//ç„¡é™ãƒ«ãƒ¼ãƒ—
 	while (TRUE)
 	{
-		if (ProcessMessage() != 0) { break; }	//ƒƒbƒZ[ƒWˆ—‚ÌŒ‹‰Ê‚ªƒGƒ‰[‚Ì‚Æ‚«A‹­§I—¹
-		if (ClearDrawScreen() != 0) { break; }	//‰æ–Ê‚ðÁ‹Ž‚Å‚«‚È‚©‚Á‚½‚Æ‚«A‹­§I—¹
+		if (ProcessMessage() != 0) { break; }	//ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‡¦ç†ã®çµæžœãŒã‚¨ãƒ©ãƒ¼ã®ã¨ãã€å¼·åˆ¶çµ‚äº†
+		if (ClearDrawScreen() != 0) { break; }	//ç”»é¢ã‚’æ¶ˆåŽ»ã§ããªã‹ã£ãŸã¨ãã€å¼·åˆ¶çµ‚äº†
 
-		//¥¥¥¥¥ ƒvƒƒOƒ‰ƒ€’Ç‰Á‚±‚±‚©‚ç ¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥
+		//â–¼â–¼â–¼â–¼â–¼ ãƒ—ãƒ­ã‚°ãƒ©ãƒ è¿½åŠ ã“ã“ã‹ã‚‰ â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼
 
 		if (GetMovieStateToGraph(handle) == 0)
 		{
-			SeekMovieToGraph(handle, 0);	//“®‰æ‚ÌÄ¶ƒo[‚ðÅ‰‚©‚ç‚É‚·‚é
-			PlayMovieToGraph(handle);		//“®‰æ‚ðÄ¶ó‘Ô‚É‚·‚é
+			SeekMovieToGraph(handle, 0);	//å‹•ç”»ã®å†ç”Ÿãƒãƒ¼ã‚’æœ€åˆã‹ã‚‰ã«ã™ã‚‹
+			PlayMovieToGraph(handle);		//å‹•ç”»ã‚’å†ç”ŸçŠ¶æ…‹ã«ã™ã‚‹
 
-			//“®‰æ‚Ì‰¹‚ð’²®‚·‚é(0‚ª–³‰¹`255‚ª“®‰æ‚Ì‰¹—Ê)
+			//å‹•ç”»ã®éŸ³ã‚’èª¿æ•´ã™ã‚‹(0ãŒç„¡éŸ³ï½ž255ãŒå‹•ç”»ã®éŸ³é‡)
 			ChangeMovieVolumeToGraph(127, handle);
 		}
 
-		//ƒ^ƒCƒgƒ‹“®‰æ•`‰æ
+		//ã‚¿ã‚¤ãƒˆãƒ«å‹•ç”»æç”»
 		//DrawGraph(0, 0, handle, FALSE);
 
-		//“®‰æ‚ðƒEƒBƒ“ƒhƒEƒTƒCƒY‚Æ‡‚í‚¹‚½‚¢I
+		//å‹•ç”»ã‚’ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚ºã¨åˆã‚ã›ãŸã„ï¼
 		DrawExtendGraph(0, 0, GAME_WIDTH, GAME_HEIGHT, handle, FALSE);
 
-		//£££££ ƒvƒƒOƒ‰ƒ€’Ç‰Á‚±‚±‚Ü‚Å ££££££££££££££££££££
+		//â–²â–²â–²â–²â–² ãƒ—ãƒ­ã‚°ãƒ©ãƒ è¿½åŠ ã“ã“ã¾ã§ â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²
 
 
-		DrawString(0, 0, "“®‰æ‚ðÄ¶‚µ‚Ä‚¢‚Ü‚·EEE", GetColor(255, 255, 255));
-
-		ScreenFlip();		//ƒ‚ƒjƒ^‚ÌƒŠƒtƒŒƒbƒVƒ…ƒŒ[ƒg‚Ì‘¬‚³‚Å— ‰æ–Ê‚ðÄ•`‰æ
+		DrawString(0, 0, "å‹•ç”»ã‚’å†ç”Ÿã—ã¦ã„ã¾ã™ãƒ»ãƒ»ãƒ»", GetColor(255, 255, 255));
+                DrawString(0,0,"çŒ«ã®å‹•ç”»",Getcolor(255,255,255));
+		ScreenFlip();		//ãƒ¢ãƒ‹ã‚¿ã®ãƒªãƒ•ãƒ¬ãƒƒã‚·ãƒ¥ãƒ¬ãƒ¼ãƒˆã®é€Ÿã•ã§è£ç”»é¢ã‚’å†æç”»
 	}
 
-	DxLib_End();	//‚c‚wƒ‰ƒCƒuƒ‰ƒŠŽg—p‚ÌI—¹ˆ—
+	DxLib_End();	//ï¼¤ï¼¸ãƒ©ã‚¤ãƒ–ãƒ©ãƒªä½¿ç”¨ã®çµ‚äº†å‡¦ç†
 
-	//¥¥¥¥¥ ƒvƒƒOƒ‰ƒ€’Ç‰Á‚±‚±‚©‚ç ¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥
+	//â–¼â–¼â–¼â–¼â–¼ ãƒ—ãƒ­ã‚°ãƒ©ãƒ è¿½åŠ ã“ã“ã‹ã‚‰ â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼â–¼
 
-	DeleteGraph(handle);	//“®‰æ‚Ìíœ
+	DeleteGraph(handle);	//å‹•ç”»ã®å‰Šé™¤
 
-	//£££££ ƒvƒƒOƒ‰ƒ€’Ç‰Á‚±‚±‚Ü‚Å ££££££££££££££££££££
+	//â–²â–²â–²â–²â–² ãƒ—ãƒ­ã‚°ãƒ©ãƒ è¿½åŠ ã“ã“ã¾ã§ â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²
 
 	return 0;
 }
